@@ -1,7 +1,9 @@
 ﻿using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Data.Repositories;
+using ArmadaMotors.Service.Interfaces.Products;
 using ArmadaMotors.Service.Interfaces.Users;
 using ArmadaMotors.Service.Services;
+using ArmadaMotors.Service.Services.Products;
 using ArmadaMotors.Service.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -79,6 +81,9 @@ namespace ArmadaMotors.Api.Extensions
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
     }
 }
