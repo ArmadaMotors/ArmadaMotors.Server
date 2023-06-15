@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;

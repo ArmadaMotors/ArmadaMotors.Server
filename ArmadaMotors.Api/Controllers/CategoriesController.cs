@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Service.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +16,7 @@ namespace ArmadaMotors.Api.Controllers
         }
 
         [HttpGet]
-        public async ValueTask<IActionResult> GetAllAsync([FromQuery]PaginationParams @params)
+        public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
             => Ok(await _categoryService.RetrieveAllAsync(@params));
 
         [HttpGet("{Id}")]
@@ -30,7 +26,7 @@ namespace ArmadaMotors.Api.Controllers
         [HttpPost]
         public async ValueTask<IActionResult> PostAsync(string name)
             => Ok(await _categoryService.AddAsync(name));
-        
+
         [HttpPut("{Id}")]
         public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, string name)
             => Ok(await _categoryService.ModifyAsync(id, name));

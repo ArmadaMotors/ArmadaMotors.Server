@@ -20,7 +20,7 @@ namespace ArmadaMotors.Api.Middlewares
             {
                 await next(context);
             }
-            catch(ArmadaException exception)
+            catch (ArmadaException exception)
             {
                 context.Response.StatusCode = exception.Code;
                 await context.Response.WriteAsJsonAsync(new Response
@@ -29,14 +29,14 @@ namespace ArmadaMotors.Api.Middlewares
                     Message = exception.Message
                 });
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 this.logger.LogError($"{exception}\n\n");
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsJsonAsync(new Response
                 {
-                   Code = 500,
-                   Message = exception.Message 
+                    Code = 500,
+                    Message = exception.Message
                 });
             }
         }

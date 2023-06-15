@@ -1,5 +1,4 @@
-﻿using ArmadaMotors.Service.DTOs;
-using ArmadaMotors.Service.DTOs.Users;
+﻿using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +16,7 @@ namespace ArmadaMotors.Api.Controllers
         }
 
         [HttpPost("Login")]
-        public async ValueTask<IActionResult> LoginAsync([FromBody]LoginDto dto)
+        public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto)
             => Ok(await _authService.AuthenticateAsync(dto));
 
     }

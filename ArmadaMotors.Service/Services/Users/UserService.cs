@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
@@ -12,7 +8,6 @@ using ArmadaMotors.Service.Interfaces.Users;
 using ArmadaMotors.Shared.Helpers;
 using AutoMapper;
 using FleetFlow.Shared.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArmadaMotors.Service.Services.Users
@@ -31,7 +26,7 @@ namespace ArmadaMotors.Service.Services.Users
         public async ValueTask<UserForResultDto> AddAsync(UserForCreationDto dto)
         {
             var user = this._mapper.Map<User>(dto);
-            
+
             var existUser = await this._userRepository.SelectAll()
                 .FirstOrDefaultAsync(u => u.Username == user.Username);
             if (existUser != null)
@@ -66,7 +61,7 @@ namespace ArmadaMotors.Service.Services.Users
         public async ValueTask<bool> RemoveAsync(long id)
         {
             var existUser = await this._userRepository.SelectByIdAsync(id);
-            if (existUser == null) 
+            if (existUser == null)
                 throw new ArmadaException(404, "User not found");
 
             return await this._userRepository.DeleteAsync(id);
@@ -74,7 +69,7 @@ namespace ArmadaMotors.Service.Services.Users
 
         public async ValueTask<IEnumerable<UserForResultDto>> RetrieveAllAsync(PaginationParams @params)
         {
-            var users =  await this._userRepository.SelectAll()
+            var users = await this._userRepository.SelectAll()
                 .ToPagedList(@params)
                 .ToListAsync();
 

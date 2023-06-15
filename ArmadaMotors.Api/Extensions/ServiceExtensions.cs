@@ -2,7 +2,6 @@
 using ArmadaMotors.Data.Repositories;
 using ArmadaMotors.Service.Interfaces.Products;
 using ArmadaMotors.Service.Interfaces.Users;
-using ArmadaMotors.Service.Services;
 using ArmadaMotors.Service.Services.Products;
 using ArmadaMotors.Service.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -94,7 +93,7 @@ namespace ArmadaMotors.Api.Extensions
         /// Add CORS to give access for header, actions
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCors(this IServiceCollection services) 
+        public static void AddCors(this IServiceCollection services)
         {
             services.AddCors(options =>
             {

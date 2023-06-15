@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Interfaces.Products;
@@ -31,7 +27,7 @@ namespace ArmadaMotors.Api.Controllers
         [HttpPost]
         public async ValueTask<IActionResult> PostAsync(ProductForCreationDto dto)
             => Ok(await _productService.AddAsync(dto));
-        
+
         [HttpPut("{Id}")]
         public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, ProductForCreationDto dto)
             => Ok(await _productService.ModifyAsync(id, dto));

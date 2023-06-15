@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Interfaces.Users;
@@ -23,19 +19,19 @@ namespace ArmadaMotors.Api.Controllers
         }
 
         [HttpGet]
-        public async ValueTask<IActionResult> GetAllAsync([FromQuery]PaginationParams @params)
+        public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
             => Ok(await _userService.RetrieveAllAsync(@params));
 
         [HttpGet("{Id}")]
-        public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")]long id)
+        public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _userService.RetrieveByIdAsync(id));
 
         [HttpPost, AllowAnonymous]
-        public async ValueTask<IActionResult> PostAsync([FromBody]UserForCreationDto dto)
+        public async ValueTask<IActionResult> PostAsync([FromBody] UserForCreationDto dto)
             => Ok(await _userService.AddAsync(dto));
-        
+
         [HttpPut("{Id}")]
-        public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")]long id, [FromBody]UserForCreationDto dto)
+        public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, [FromBody] UserForCreationDto dto)
             => Ok(await _userService.ModifyAsync(id, dto));
 
         [HttpDelete("{Id}")]
