@@ -1,6 +1,7 @@
 using ArmadaMotors.Api.Extensions;
 using ArmadaMotors.Api.Middlewares;
 using ArmadaMotors.Data.DbContexts;
+using ArmadaMotors.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddDbContext<ArmadaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.ConfigureSwagger();
 builder.Services.AddJwtService(builder.Configuration);

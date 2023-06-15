@@ -1,19 +1,19 @@
-using ArmadaMotors.Domain.Commons;
+﻿using ArmadaMotors.Domain.Commons;
 using ArmadaMotors.Domain.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace ArmadaMotors.Domain.Entities
+namespace ArmadaMotors.Service.DTOs.Users
 {
-    public class User : Auditable
+    public class UserForResultDto : Auditable
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-
-        [MinLength(5)]
         public string Username { get; set; }
-
-        [MaxLength(5)]
-        public string Password { get; set; }
         public UserRole Role { get; set; }
     }
 }

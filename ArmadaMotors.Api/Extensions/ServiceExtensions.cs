@@ -76,6 +76,10 @@ namespace ArmadaMotors.Api.Extensions
             });
         }
 
+        /// <summary>
+        /// Custom services
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -84,6 +88,21 @@ namespace ArmadaMotors.Api.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+        }
+
+        /// <summary>
+        /// Add CORS to give access for header, actions
+        /// </summary>
+        /// <param name="services"></param>
+        public static void AddCors(this IServiceCollection services) 
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
         }
     }
 }

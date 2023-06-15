@@ -1,4 +1,5 @@
 using ArmadaMotors.Data.IRepositories;
+using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
 using ArmadaMotors.Service.Interfaces.Products;
 
@@ -28,7 +29,7 @@ namespace ArmadaMotors.Service.Services.Products
             throw new NotImplementedException();
         }
 
-        public ValueTask<IEnumerable<Category>> RetrieveAllAsync()
+        public ValueTask<IEnumerable<Category>> RetrieveAllAsync(PaginationParams @params)
         {
             throw new NotImplementedException();
         }

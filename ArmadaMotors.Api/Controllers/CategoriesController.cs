@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Service.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +20,11 @@ namespace ArmadaMotors.Api.Controllers
         }
 
         [HttpGet]
-        public async ValueTask<IActionResult> GetAllAsync()
-            => Ok(await _categoryService.RetrieveAllAsync());
+        public async ValueTask<IActionResult> GetAllAsync([FromQuery]PaginationParams @params)
+            => Ok(await _categoryService.RetrieveAllAsync(@params));
 
         [HttpGet("{Id}")]
-        public async ValueTask<IActionResult> GetAsync(long id)
+        public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _categoryService.RetrieveById(id));
 
         [HttpPost]
@@ -31,11 +32,11 @@ namespace ArmadaMotors.Api.Controllers
             => Ok(await _categoryService.AddAsync(name));
         
         [HttpPut("{Id}")]
-        public async ValueTask<IActionResult> PutAsync(long id, string name)
+        public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, string name)
             => Ok(await _categoryService.ModifyAsync(id, name));
 
         [HttpDelete("{Id}")]
-        public async ValueTask<IActionResult> DeleteAsync(long id)
+        public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _categoryService.RemoveAsync(id));
     }
 }
