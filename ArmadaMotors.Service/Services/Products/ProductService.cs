@@ -3,8 +3,10 @@ using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
 using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Exceptions;
+using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces;
 using ArmadaMotors.Service.Interfaces.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArmadaMotors.Service.Services.Products
 {
@@ -49,9 +51,25 @@ namespace ArmadaMotors.Service.Services.Products
             return await this._productRepository.InsertAsync(product);
         }
 
-        public ValueTask<Product> ModifyAsync(long id, ProductForCreationDto dto)
+        public async ValueTask<Product> ModifyAsync(long id, ProductForUpdateDto dto)
         {
-            throw new NotImplementedException();
+            var product = await this._productRepository.SelectAll()
+                .Include(p => p.Assets)
+                .ThenInclude(a => a.Asset)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+                throw new ArmadaException(404, "Product not found");
+
+            product.CategoryId = dto.CategoryId;
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+
+            product.UpdatedAt = DateTime.UtcNow;
+
+            await this._productRepository.SaveChangesAsync();
+
+            return product;
         }
 
         public ValueTask<bool> RemoveAsync(long id)
@@ -59,14 +77,23 @@ namespace ArmadaMotors.Service.Services.Products
             throw new NotImplementedException();
         }
 
-        public ValueTask<IEnumerable<Product>> RetrieveAllAsync(PaginationParams @params)
+        public async ValueTask<IEnumerable<Product>> RetrieveAllAsync(PaginationParams @params)
         {
-            throw new NotImplementedException();
+            return await this._productRepository.SelectAll()
+                .Include(p => p.Assets)
+                .ThenInclude(a => a.Asset)
+                .Include(p => p.Category)
+                .ToPagedList(@params)
+                .ToListAsync();
         }
 
-        public ValueTask<Product> RetrieveById(long id)
+        public async ValueTask<Product> RetrieveById(long id)
         {
-            throw new NotImplementedException();
+            return await this._productRepository.SelectAll()
+                .Include(p => p.Assets)
+                .ThenInclude(a => a.Asset)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

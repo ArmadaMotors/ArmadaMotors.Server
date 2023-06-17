@@ -9,5 +9,6 @@ namespace ArmadaMotors.Data.IRepositories
         ValueTask<bool> DeleteAsync(long id);
         IQueryable<TEntity> SelectAll();
         ValueTask<TEntity> SelectByIdAsync(long id);
+        ValueTask<bool> SaveChangesAsync();
     }
 }

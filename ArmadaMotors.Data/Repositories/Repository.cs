@@ -48,5 +48,10 @@ namespace ArmadaMotors.Data.Repositories
 
             return entry.Entity;
         }
+
+        public async ValueTask<bool> SaveChangesAsync()
+        {
+            return await this._dbContext.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace ArmadaMotors.Service.Interfaces.Products
     {
         ValueTask<Product> RetrieveById(long id);
         ValueTask<IEnumerable<Product>> RetrieveAllAsync(PaginationParams @params);
-        ValueTask<Product> ModifyAsync(long id, ProductForCreationDto dto);
+        ValueTask<Product> ModifyAsync(long id, ProductForUpdateDto dto);
         ValueTask<Product> AddAsync(ProductForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
     }
