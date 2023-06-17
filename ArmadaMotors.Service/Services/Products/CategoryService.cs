@@ -1,42 +1,68 @@
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
+using ArmadaMotors.Service.Exceptions;
+using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces.Products;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ArmadaMotors.Service.Services.Products
 {
     public class CategoryService : ICategoryService
     {
-        private readonly IRepository<Category> _categoryService;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public CategoryService(IRepository<Category> categoryService)
+        public CategoryService(IRepository<Category> categoryRepository)
         {
-            _categoryService = categoryService;
+            _categoryRepository = categoryRepository;
         }
 
-        public ValueTask<Category> AddAsync(string name)
+        public async ValueTask<Category> AddAsync(string name)
         {
-            throw new NotImplementedException();
+            return await this._categoryRepository.InsertAsync(new Category
+            { 
+                Name = name 
+            });
         }
 
-        public ValueTask<Category> ModifyAsync(long id, string name)
+        public async ValueTask<Category> ModifyAsync(long id, string name)
         {
-            throw new NotImplementedException();
+            var category = await this._categoryRepository.SelectByIdAsync(id);
+            if (category == null)
+                throw new ArmadaException(404, "Category not found");
+
+            category.Name = name;
+
+            return category;
         }
 
-        public ValueTask<bool> RemoveAsync(long id)
+        public async ValueTask<bool> RemoveAsync(long id)
         {
-            throw new NotImplementedException();
+            var category = await this._categoryRepository.SelectByIdAsync(id);
+            if (category == null)
+                throw new ArmadaException(404, "Category not found");
+
+            return await this._categoryRepository.DeleteAsync(id);
         }
 
-        public ValueTask<IEnumerable<Category>> RetrieveAllAsync(PaginationParams @params)
+        public async ValueTask<IEnumerable<Category>> RetrieveAllAsync(PaginationParams @params)
         {
-            throw new NotImplementedException();
+            return await this._categoryRepository.SelectAll()
+                .Include(c => c.Products)
+                .ToPagedList(@params)
+                .ToListAsync();
         }
 
-        public ValueTask<Category> RetrieveById(long id)
+        public async ValueTask<Category> RetrieveById(long id)
         {
-            throw new NotImplementedException();
+            var category = await this._categoryRepository.SelectAll()
+                .Include(c => c.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (category == null)
+                throw new ArmadaException(404, "Category not found");
+
+            return category;
         }
     }
 }
