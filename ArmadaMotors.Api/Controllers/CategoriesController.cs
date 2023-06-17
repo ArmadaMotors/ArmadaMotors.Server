@@ -1,10 +1,11 @@
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Service.Interfaces.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ArmadaMotors.Api.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize]
     [Route("Api/[controller]")]
     public class CategoriesController : ControllerBase
     {
@@ -14,11 +15,11 @@ namespace ArmadaMotors.Api.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
             => Ok(await _categoryService.RetrieveAllAsync(@params));
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), AllowAnonymous]
         public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _categoryService.RetrieveById(id));
 
