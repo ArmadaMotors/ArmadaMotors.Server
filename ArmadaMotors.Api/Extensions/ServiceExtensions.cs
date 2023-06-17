@@ -94,7 +94,7 @@ namespace ArmadaMotors.Api.Extensions
         /// Add CORS to give access for header, actions
         /// </summary>
         /// <param name="services"></param>
-        public static void AddCors(this IServiceCollection services) 
+        public static void ConfigureCors(this IServiceCollection services) 
         {
             services.AddCors(options =>
             {

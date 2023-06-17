@@ -17,6 +17,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ArmadaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.ConfigureCors();
 
 builder.Services.ConfigureSwagger();
 builder.Services.AddJwtService(builder.Configuration);
@@ -33,6 +34,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
