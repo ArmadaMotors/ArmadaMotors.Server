@@ -37,11 +37,14 @@ namespace ArmadaMotors.Service.Services.Products
             product.Assets = new List<ProductAsset>();
 
             // save assets
-            var asset = await this._assetService.AddAsync(dto.Images.FirstOrDefault());
-            product.Assets.Add(new ProductAsset
+            foreach (var image in dto.Images)
             {
-                AssetId = asset.Id
-            });
+                var asset = await this._assetService.AddAsync(image);
+                product.Assets.Add(new ProductAsset
+                {
+                    AssetId = asset.Id
+                });
+            }
 
             return await this._productRepository.InsertAsync(product);
         }

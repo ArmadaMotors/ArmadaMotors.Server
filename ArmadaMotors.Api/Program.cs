@@ -39,10 +39,10 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
 app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
-app.UseStaticFiles("/assets");
 
 app.UseAuthorization();
 
