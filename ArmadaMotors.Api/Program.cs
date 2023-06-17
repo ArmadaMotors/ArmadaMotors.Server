@@ -3,12 +3,16 @@ using ArmadaMotors.Api.Middlewares;
 using ArmadaMotors.Data.DbContexts;
 using ArmadaMotors.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,6 +30,7 @@ builder.Services.AddCustomServices();
 var app = builder.Build();
 
 app.InitAccessor();
+app.InitEnvironment();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -37,6 +42,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseCors("AllowAll");
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
+app.UseStaticFiles("/assets");
 
 app.UseAuthorization();
 

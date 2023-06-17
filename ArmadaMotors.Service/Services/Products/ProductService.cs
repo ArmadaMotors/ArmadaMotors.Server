@@ -2,22 +2,48 @@ using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
 using ArmadaMotors.Service.DTOs.Products;
+using ArmadaMotors.Service.Exceptions;
+using ArmadaMotors.Service.Interfaces;
 using ArmadaMotors.Service.Interfaces.Products;
 
 namespace ArmadaMotors.Service.Services.Products
 {
     public class ProductService : IProductService
     {
-        private readonly IRepository<Product> _productService;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IAssetService _assetService;
 
-        public ProductService(IRepository<Product> productService)
+        public ProductService(IRepository<Product> productService,
+            IRepository<Category> categoryService,
+            IAssetService assetService)
         {
-            _productService = productService;
+            _productRepository = productService;
+            _categoryRepository = categoryService;
+            _assetService = assetService;
         }
 
-        public ValueTask<Product> AddAsync(ProductForCreationDto dto)
+        public async ValueTask<Product> AddAsync(ProductForCreationDto dto)
         {
-            throw new NotImplementedException();
+            var category = await this._categoryRepository.SelectByIdAsync(dto.CategoryId);
+            if (category == null)
+                throw new ArmadaException(404, "Category not found");
+
+            // TODO: Initialize product details
+            var product = new Product();
+            product.CategoryId = dto.CategoryId;
+            product.Name = dto.Name;
+            product.Price = dto.Price;
+            product.Assets = new List<ProductAsset>();
+
+            // save assets
+            var asset = await this._assetService.AddAsync(dto.Images.FirstOrDefault());
+            product.Assets.Add(new ProductAsset
+            {
+                AssetId = asset.Id
+            });
+
+            return await this._productRepository.InsertAsync(product);
         }
 
         public ValueTask<Product> ModifyAsync(long id, ProductForCreationDto dto)

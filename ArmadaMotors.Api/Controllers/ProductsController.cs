@@ -25,7 +25,7 @@ namespace ArmadaMotors.Api.Controllers
             => Ok(await _productService.RetrieveById(id));
 
         [HttpPost]
-        public async ValueTask<IActionResult> PostAsync(ProductForCreationDto dto)
+        public async ValueTask<IActionResult> PostAsync([FromForm]ProductForCreationDto dto)
             => Ok(await _productService.AddAsync(dto));
 
         [HttpPut("{Id}")]

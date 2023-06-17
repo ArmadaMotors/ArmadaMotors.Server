@@ -1,9 +1,12 @@
 ﻿using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Data.Repositories;
+using ArmadaMotors.Service.Interfaces;
 using ArmadaMotors.Service.Interfaces.Products;
 using ArmadaMotors.Service.Interfaces.Users;
+using ArmadaMotors.Service.Services;
 using ArmadaMotors.Service.Services.Products;
 using ArmadaMotors.Service.Services.Users;
+using ArmadaMotors.Shared.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -87,13 +90,14 @@ namespace ArmadaMotors.Api.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAssetService, AssetService>();
         }
 
         /// <summary>
         /// Add CORS to give access for header, actions
         /// </summary>
         /// <param name="services"></param>
-        public static void ConfigureCors(this IServiceCollection services) 
+        public static void ConfigureCors(this IServiceCollection services)
         {
             services.AddCors(options =>
             {

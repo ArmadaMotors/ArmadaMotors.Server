@@ -12,7 +12,7 @@ namespace ArmadaMotors.Domain.Entities
         [MinLength(5)]
         public string Username { get; set; }
 
-        [MaxLength(5)]
+        [MinLength(5)]
         public string Password { get; set; }
         public UserRole Role { get; set; }
     }

@@ -5,7 +5,6 @@ using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces.Products;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography.X509Certificates;
 
 namespace ArmadaMotors.Service.Services.Products
 {
@@ -21,8 +20,8 @@ namespace ArmadaMotors.Service.Services.Products
         public async ValueTask<Category> AddAsync(string name)
         {
             return await this._categoryRepository.InsertAsync(new Category
-            { 
-                Name = name 
+            {
+                Name = name
             });
         }
 

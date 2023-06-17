@@ -10,6 +10,6 @@ namespace ArmadaMotors.Domain.Entities
         public Category Category { get; set; }
 
         public decimal Price { get; set; }
-        public IEnumerable<ProductAsset> Assets { get; set; }
+        public ICollection<ProductAsset> Assets { get; set; }
     }
 }
