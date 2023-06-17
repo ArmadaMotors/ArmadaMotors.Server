@@ -1,6 +1,5 @@
 ﻿using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Entities;
-using ArmadaMotors.Service.DTOs;
 using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Interfaces.Users;

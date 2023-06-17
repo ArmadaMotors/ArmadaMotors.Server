@@ -2,7 +2,6 @@
 using ArmadaMotors.Data.Repositories;
 using ArmadaMotors.Service.Interfaces.Products;
 using ArmadaMotors.Service.Interfaces.Users;
-using ArmadaMotors.Service.Services;
 using ArmadaMotors.Service.Services.Products;
 using ArmadaMotors.Service.Services.Users;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

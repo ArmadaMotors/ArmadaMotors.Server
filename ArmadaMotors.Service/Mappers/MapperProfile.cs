@@ -2,11 +2,6 @@
 using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.DTOs.Users;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArmadaMotors.Service.Mappers
 {
