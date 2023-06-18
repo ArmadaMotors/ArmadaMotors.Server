@@ -23,7 +23,7 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
             => Ok(await this._inventoryService.RetrieveByIdAsync(id));
 
-        [HttpGet("Product/ProductId")]
+        [HttpGet("Product/{ProductId}")]
         public async ValueTask<IActionResult> GetByProductIdAsync([FromRoute(Name = "ProductId")] long productId)
             => Ok(await this._inventoryService.RetrieveByProductIdAsync(productId));
 
