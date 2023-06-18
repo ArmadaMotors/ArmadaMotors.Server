@@ -41,7 +41,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assets");
+                    b.ToTable("Assets", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Category", b =>
@@ -63,7 +63,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Inventory", b =>
@@ -90,7 +90,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Inventories");
+                    b.ToTable("Inventories", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Product", b =>
@@ -120,7 +120,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.ProductAsset", b =>
@@ -149,7 +149,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductAssets");
+                    b.ToTable("ProductAssets", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.User", b =>
@@ -183,7 +183,7 @@ namespace ArmadaMotors.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Inventory", b =>

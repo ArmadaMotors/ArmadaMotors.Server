@@ -11,5 +11,6 @@ namespace ArmadaMotors.Service.Interfaces.Products
         ValueTask<Product> ModifyAsync(long id, ProductForUpdateDto dto);
         ValueTask<Product> AddAsync(ProductForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
+        ValueTask<IEnumerable<Product>> SearchAsync(Filter filter);
     }
 }

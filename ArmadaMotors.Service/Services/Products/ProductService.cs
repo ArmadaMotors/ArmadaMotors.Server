@@ -72,9 +72,13 @@ namespace ArmadaMotors.Service.Services.Products
             return product;
         }
 
-        public ValueTask<bool> RemoveAsync(long id)
+        public async ValueTask<bool> RemoveAsync(long id)
         {
-            throw new NotImplementedException();
+            var product = await this._productRepository.SelectByIdAsync(id);
+            if (product == null)
+                throw new ArmadaException(404, "Product not found");
+
+            return await this._productRepository.DeleteAsync(id);
         }
 
         public async ValueTask<IEnumerable<Product>> RetrieveAllAsync(PaginationParams @params)
@@ -94,6 +98,28 @@ namespace ArmadaMotors.Service.Services.Products
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async ValueTask<IEnumerable<Product>> SearchAsync(Filter filter)
+        {
+            var productsQuery = this._productRepository.SelectAll()
+                .Include(p => p.Category)
+                //.Include(p => p.Assets)
+                .Where(p => p.Price >= filter.From && p.Price <= filter.To);
+            
+            if(filter.CategoryId != null)
+                productsQuery = productsQuery.Where(p => p.CategoryId == filter.CategoryId);
+
+            if (!string.IsNullOrEmpty(filter.Text))
+            {
+                productsQuery = productsQuery.Where(p =>
+                p.Name.Contains(filter.Text, StringComparison.OrdinalIgnoreCase) &&
+                p.Category.Name.Contains(filter.Text, StringComparison.OrdinalIgnoreCase));
+            }
+
+            return await productsQuery
+                .ToPagedList(filter)
+                .ToListAsync();
         }
     }
 }

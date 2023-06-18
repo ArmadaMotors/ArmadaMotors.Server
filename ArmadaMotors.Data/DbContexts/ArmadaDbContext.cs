@@ -10,11 +10,19 @@ namespace ArmadaMotors.Data.DbContexts
         {
         }
 
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Asset> Assets { get; set; }
-        public virtual DbSet<ProductAsset> ProductAssets { get; set; }
-        public virtual DbSet<Inventory> Inventories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Asset> Assets { get; set; }
+        public DbSet<ProductAsset> ProductAssets { get; set; }
+        public DbSet<Inventory> Inventories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(p => p.Products)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

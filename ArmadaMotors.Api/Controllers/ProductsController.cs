@@ -36,5 +36,8 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _productService.RemoveAsync(id));
 
+        [HttpPost("Search"), AllowAnonymous]
+        public async ValueTask<IActionResult> SearchAsync(Filter filter)
+            => Ok(await this._productService.SearchAsync(filter));
     }
 }
