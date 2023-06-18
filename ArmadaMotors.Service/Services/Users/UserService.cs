@@ -1,6 +1,7 @@
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
+using ArmadaMotors.Domain.Enums;
 using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
@@ -56,6 +57,19 @@ namespace ArmadaMotors.Service.Services.Users
             var result = await this._userRepository.UpdateAsync(user);
 
             return this._mapper.Map<UserForResultDto>(result);
+        }
+
+        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRole role)
+        {
+            var user = await this._userRepository.SelectByIdAsync(id);
+            if (user == null)
+                throw new ArmadaException(404, "User not found");
+
+            user.Role = role;
+
+            await this._userRepository.SaveChangesAsync();
+
+            return this._mapper.Map<UserForResultDto>(user);
         }
 
         public async ValueTask<bool> RemoveAsync(long id)

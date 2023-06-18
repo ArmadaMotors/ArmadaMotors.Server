@@ -1,4 +1,5 @@
 using ArmadaMotors.Domain.Configurations;
+using ArmadaMotors.Domain.Enums;
 using ArmadaMotors.Service.DTOs.Users;
 
 namespace ArmadaMotors.Service.Interfaces.Users
@@ -12,5 +13,6 @@ namespace ArmadaMotors.Service.Interfaces.Users
         ValueTask<bool> RemoveAsync(long id);
 
         ValueTask<UserForResultDto> RetrieveMeAsync();
+        ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRole role);
     }
 }

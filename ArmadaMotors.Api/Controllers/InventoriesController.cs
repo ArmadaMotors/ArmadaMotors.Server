@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArmadaMotors.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class InventoriesController : BaseController
     {
         private readonly IInventoryService _inventoryService;

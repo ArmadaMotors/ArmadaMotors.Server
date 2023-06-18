@@ -1,4 +1,5 @@
 using ArmadaMotors.Domain.Configurations;
+using ArmadaMotors.Domain.Enums;
 using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Interfaces.Users;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArmadaMotors.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UsersController : BaseController
     {
         private readonly IUserService _userService;
@@ -36,9 +37,12 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _userService.RemoveAsync(id));
 
-        [HttpGet("Me")]
+        [HttpGet("Me"), Authorize]
         public async ValueTask<IActionResult> GetMeAsync()
             => Ok(await _userService.RetrieveMeAsync());
 
+        [HttpPatch("{Id}/Role")]
+        public async ValueTask<IActionResult> UpdateRoleAsync([FromRoute(Name = "Id")] long id, UserRole role)
+            => Ok(await _userService.ModifyRoleAsync(id, role));
     }
 }
