@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArmadaMotors.Api.Controllers
 {
-    [ApiController, Authorize]
-    [Route("Api/[controller]")]
-    public class CategoriesController : ControllerBase
+    [Authorize]
+    public class CategoriesController : BaseController
     {
         private readonly ICategoryService _categoryService;
         public CategoriesController(ICategoryService categoryService)

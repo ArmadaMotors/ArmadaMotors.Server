@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ArmadaMotors.Api.Controllers
 {
-    [ApiController, Authorize]
-    [Route("Api/[controller]")]
-    public class ProductsController : ControllerBase
+    [Authorize]
+    public class ProductsController : BaseController
     {
         private readonly IProductService _productService;
 

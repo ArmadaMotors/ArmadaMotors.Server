@@ -91,6 +91,7 @@ namespace ArmadaMotors.Api.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAssetService, AssetService>();
+            services.AddScoped<IInventoryService, InventoryService>();
         }
 
         /// <summary>
