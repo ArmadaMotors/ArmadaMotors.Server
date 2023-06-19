@@ -84,6 +84,7 @@ namespace ArmadaMotors.Service.Services.Users
         public async ValueTask<IEnumerable<UserForResultDto>> RetrieveAllAsync(PaginationParams @params)
         {
             var users = await this._userRepository.SelectAll()
+                .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
 
