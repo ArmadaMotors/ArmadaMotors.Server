@@ -87,6 +87,7 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
+                .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
         }
@@ -97,6 +98,7 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
@@ -104,7 +106,7 @@ namespace ArmadaMotors.Service.Services.Products
         {
             var productsQuery = this._productRepository.SelectAll()
                 .Include(p => p.Category)
-                //.Include(p => p.Assets)
+                .Include(p => p.Assets)
                 .Where(p => p.Price >= filter.From && p.Price <= filter.To);
             
             if(filter.CategoryId != null)

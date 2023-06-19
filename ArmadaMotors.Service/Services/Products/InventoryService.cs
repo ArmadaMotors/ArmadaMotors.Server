@@ -29,6 +29,7 @@ namespace ArmadaMotors.Service.Services.Products
         {
             return await this._inventoryRepository.SelectAll()
                 .Include(i => i.Product)
+                .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
         }
@@ -38,6 +39,7 @@ namespace ArmadaMotors.Service.Services.Products
             var inventory = await this._inventoryRepository.SelectAll()
                 .Include(i => i.Product)
                 .ThenInclude(p => p.Category)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(i => i.Id == id);
             if (inventory == null)
                 throw new ArmadaException(404, "Inventory not found");
@@ -50,6 +52,7 @@ namespace ArmadaMotors.Service.Services.Products
             var inventory = await this._inventoryRepository.SelectAll()
                 .Include(i => i.Product)
                 .ThenInclude(p => p.Category)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(i => i.ProductId == productId);
             if (inventory == null)
                 throw new ArmadaException(404, "Inventory not found");

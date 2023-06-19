@@ -49,6 +49,7 @@ namespace ArmadaMotors.Service.Services.Products
         {
             return await this._categoryRepository.SelectAll()
                 .Include(c => c.Products)
+                .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
         }
@@ -59,6 +60,7 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(c => c.Products)
                 .ThenInclude(p => p.Assets)
                 .ThenInclude(a => a.Asset)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (category == null)
                 throw new ArmadaException(404, "Category not found");
