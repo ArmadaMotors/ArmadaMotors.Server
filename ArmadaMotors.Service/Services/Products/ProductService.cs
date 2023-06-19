@@ -6,6 +6,7 @@ using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces;
 using ArmadaMotors.Service.Interfaces.Products;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArmadaMotors.Service.Services.Products
@@ -15,14 +16,17 @@ namespace ArmadaMotors.Service.Services.Products
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IAssetService _assetService;
+        private readonly IMapper _mapper;
 
         public ProductService(IRepository<Product> productService,
             IRepository<Category> categoryService,
-            IAssetService assetService)
+            IAssetService assetService,
+            IMapper mapper)
         {
             _productRepository = productService;
             _categoryRepository = categoryService;
             _assetService = assetService;
+            _mapper = mapper;
         }
 
         public async ValueTask<Product> AddAsync(ProductForCreationDto dto)
@@ -32,10 +36,7 @@ namespace ArmadaMotors.Service.Services.Products
                 throw new ArmadaException(404, "Category not found");
 
             // TODO: Initialize product details
-            var product = new Product();
-            product.CategoryId = dto.CategoryId;
-            product.Name = dto.Name;
-            product.Price = dto.Price;
+            var product = this._mapper.Map<Product>(dto);
             product.Assets = new List<ProductAsset>();
 
             // save assets
@@ -61,10 +62,7 @@ namespace ArmadaMotors.Service.Services.Products
             if (product == null)
                 throw new ArmadaException(404, "Product not found");
 
-            product.CategoryId = dto.CategoryId;
-            product.Name = dto.Name;
-            product.Price = dto.Price;
-
+            this._mapper.Map(dto, product);
             product.UpdatedAt = DateTime.UtcNow;
 
             await this._productRepository.SaveChangesAsync();

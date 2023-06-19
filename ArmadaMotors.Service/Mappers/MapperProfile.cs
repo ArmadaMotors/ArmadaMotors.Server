@@ -12,6 +12,7 @@ namespace ArmadaMotors.Service.Mappers
             CreateMap<User, UserForCreationDto>().ReverseMap();
             CreateMap<UserForResultDto, User>().ReverseMap();
             CreateMap<Product, ProductForCreationDto>().ReverseMap();
+            CreateMap<Product, ProductForUpdateDto>().ReverseMap();
         }
     }
 }

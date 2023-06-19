@@ -1,3 +1,4 @@
+using ArmadaMotors.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace ArmadaMotors.Service.DTOs.Products
@@ -7,6 +8,7 @@ namespace ArmadaMotors.Service.DTOs.Products
         public string Name { get; set; }
         public long CategoryId { get; set; }
         public decimal Price { get; set; }
+        public CurrencyType CurrencyType { get; set; }
         public IEnumerable<IFormFile> Images { get; set; }
     }
 }
