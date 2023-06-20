@@ -10,5 +10,6 @@ namespace ArmadaMotors.Service.Interfaces
         ValueTask<IEnumerable<Asset>> RetrieveAllAsync(PaginationParams @params);
         ValueTask<Asset> AddAsync(IFormFile file);
         ValueTask<bool> RemoveAsync(long id);
+        ValueTask<MemoryStream> ReduceImageSizeAsync(Stream file);
     }
 }
