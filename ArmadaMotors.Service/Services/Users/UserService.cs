@@ -50,10 +50,11 @@ namespace ArmadaMotors.Service.Services.Users
             if (existUser != null && oldUser.Username != dto.Username)
                 throw new ArmadaException(400, "Username is already taken");
 
-            var user = this._mapper.Map(dto, existUser);
+            var user = this._mapper.Map(dto, existUser ?? oldUser);
 
             user.Id = id;
             user.Password = PasswordHelper.Hash(user.Password);
+            user.UpdatedAt = DateTime.UtcNow;
             var result = await this._userRepository.UpdateAsync(user);
 
             return this._mapper.Map<UserForResultDto>(result);
