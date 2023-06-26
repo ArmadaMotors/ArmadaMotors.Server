@@ -113,8 +113,9 @@ namespace ArmadaMotors.Service.Services.Products
             if (!string.IsNullOrEmpty(filter.Text))
             {
                 productsQuery = productsQuery.Where(p =>
-                p.Name.Contains(filter.Text, StringComparison.OrdinalIgnoreCase) &&
-                p.Category.Name.Contains(filter.Text, StringComparison.OrdinalIgnoreCase));
+                p.Name.ToLower().Contains(filter.Text.ToLower()) ||
+                p.Category.Name.ToLower().Contains(filter.Text.ToLower()) ||
+                p.Description.ToLower().Contains(filter.Text.ToLower()));
             }
 
             return await productsQuery
