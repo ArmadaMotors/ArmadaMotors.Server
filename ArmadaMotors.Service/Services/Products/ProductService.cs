@@ -105,17 +105,24 @@ namespace ArmadaMotors.Service.Services.Products
             var productsQuery = this._productRepository.SelectAll()
                 .Include(p => p.Category)
                 .Include(p => p.Assets)
-                .Where(p => p.Price >= filter.From && p.Price <= filter.To);
+                .ThenInclude(a => a.Asset)
+                .AsQueryable();
             
+            if(filter.From != null && filter.To != null)
+            {
+                productsQuery = productsQuery
+                    .Where(p => p.Price >= filter.From && p.Price <= filter.To);
+            }
+
             if(filter.CategoryId != null)
                 productsQuery = productsQuery.Where(p => p.CategoryId == filter.CategoryId);
 
             if (!string.IsNullOrEmpty(filter.Text))
             {
                 productsQuery = productsQuery.Where(p =>
-                p.Name.ToLower().Contains(filter.Text.ToLower()) ||
-                p.Category.Name.ToLower().Contains(filter.Text.ToLower()) ||
-                p.Description.ToLower().Contains(filter.Text.ToLower()));
+                    p.Name.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.Category.Name.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.Description.ToLower().Contains(filter.Text.ToLower()));
             }
 
             return await productsQuery

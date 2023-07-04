@@ -33,6 +33,8 @@ namespace ArmadaMotors.Service.Services.Products
 
             category.Name = name;
 
+            await this._categoryRepository.SaveChangesAsync();
+
             return category;
         }
 

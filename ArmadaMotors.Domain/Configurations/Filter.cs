@@ -16,12 +16,12 @@ namespace ArmadaMotors.Domain.Configurations
         /// <summary>
         /// Price from
         /// </summary>
-        public decimal From { get; set; }
+        public decimal? From { get; set; }
 
         /// <summary>
         /// Price to
         /// </summary>
-        public decimal To { get; set; }
+        public decimal? To { get; set; }
         
         /// <summary>
         /// Category name
