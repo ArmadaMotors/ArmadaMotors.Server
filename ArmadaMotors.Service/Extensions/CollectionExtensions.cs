@@ -21,6 +21,7 @@ namespace ArmadaMotors.Service.Extensions
                     HttpContextHelper.ResponseHeaders.Remove("X-Pagination");
 
                 HttpContextHelper.ResponseHeaders.Add("X-Pagination", json);
+                HttpContextHelper.ResponseHeaders.Add("Access-Control-Expose-Headers", "X-Pagination");
             }
 
             return @params.PageIndex > 0 && @params.PageSize > 0 ?
