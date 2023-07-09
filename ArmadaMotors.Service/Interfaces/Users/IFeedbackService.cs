@@ -10,7 +10,7 @@ namespace ArmadaMotors.Service.Interfaces.Users
 {
     public interface IFeedbackService
     {
-        ValueTask<IEnumerable<Feedback>> RetrieveAllAsync(long productId, PaginationParams @params);
+        ValueTask<IEnumerable<Feedback>> RetrieveAllAsync(long? productId, PaginationParams @params);
         ValueTask<Feedback> AddAsync(FeedbackForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
         ValueTask<Feedback> SetAvailabilityAsync(long id);
