@@ -16,6 +16,8 @@ namespace ArmadaMotors.Data.DbContexts
         public DbSet<Asset> Assets { get; set; }
         public DbSet<ProductAsset> ProductAssets { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
