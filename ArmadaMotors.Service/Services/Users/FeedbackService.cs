@@ -49,7 +49,14 @@ namespace ArmadaMotors.Service.Services.Users
             return await _feedbackRepository.DeleteAsync(id);
         }
 
-        public async ValueTask<IEnumerable<Feedback>> RetrieveAllAsync(long? productId, PaginationParams @params)
+        public async ValueTask<IEnumerable<Feedback>> RetrieveAllAsync(PaginationParams @params)
+        {
+            return await _feedbackRepository.SelectAll()
+                .ToPagedList(@params)
+                .ToListAsync();
+        }
+
+        public async ValueTask<IEnumerable<Feedback>> RetrieveAllByProductIdAsync(long? productId, PaginationParams @params)
         {
             var feedbackQuery = _feedbackRepository.SelectAll()
                 .Where(f => f.IsAvailable);

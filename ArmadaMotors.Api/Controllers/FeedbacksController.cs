@@ -21,9 +21,13 @@ namespace ArmadaMotors.Api.Controllers
             _feedbackService = feedbackService;
         }
 
-        [HttpGet, AllowAnonymous]
-        public async ValueTask<IActionResult> GetAllAsync(long? productId, [FromQuery] PaginationParams @params)
-            => Ok(await _feedbackService.RetrieveAllAsync(productId, @params));
+        [HttpGet("Availables"), AllowAnonymous]
+        public async ValueTask<IActionResult> GetAllByProductIdAsync(long? productId, [FromQuery] PaginationParams @params)
+            => Ok(await _feedbackService.RetrieveAllByProductIdAsync(productId, @params));
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
+            => Ok(await _feedbackService.RetrieveAllAsync(@params));
 
         [HttpDelete("{Id}")]
         public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
