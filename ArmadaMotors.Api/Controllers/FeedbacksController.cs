@@ -37,7 +37,7 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> SetAvailabilityAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _feedbackService.SetAvailabilityAsync(id));
 
-        [HttpPost, AllowAnonymous]
+        [HttpPost, Authorize]
         public async ValueTask<IActionResult> PostAsync(FeedbackForCreationDto dto)
             => Ok(await _feedbackService.AddAsync(dto));
     }

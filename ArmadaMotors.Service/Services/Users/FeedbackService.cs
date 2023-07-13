@@ -9,6 +9,7 @@ using ArmadaMotors.Service.DTOs.Users;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces.Users;
+using ArmadaMotors.Shared.Helpers;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,7 @@ namespace ArmadaMotors.Service.Services.Users
                 throw new ArmadaException(404, "Product not found");
 
             var feedback = _mapper.Map<Feedback>(dto);
+            feedback.UserId = HttpContextHelper.UserId ?? throw new UnauthorizedAccessException();
 
             return await _feedbackRepository.InsertAsync(feedback);
         }

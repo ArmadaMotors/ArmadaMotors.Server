@@ -13,5 +13,8 @@ namespace ArmadaMotors.Domain.Entities
 
         public bool IsAvailable { get; set; }
         public string Message { get; set; }
+
+        public long? UserId { get; set; }
+        public User User { get; set; }
     }
 }
