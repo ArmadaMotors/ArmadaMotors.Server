@@ -1,6 +1,7 @@
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
+using ArmadaMotors.Domain.Enums;
 using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
@@ -100,6 +101,19 @@ namespace ArmadaMotors.Service.Services.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async ValueTask<ProductPricesResultDto> RetrievePricesAsync(CurrencyType currencyType)
+        {
+            var productsQuery = _productRepository.SelectAll()
+                .Where(p => p.CurrencyType == currencyType)
+                .OrderBy(p => p.Price);
+            
+            return new ProductPricesResultDto
+            {
+                From = (await productsQuery.FirstOrDefaultAsync()).Price,
+                To = (await productsQuery.LastOrDefaultAsync()).Price
+            };
+        }
+
         public async ValueTask<IEnumerable<Product>> SearchAsync(Filter filter)
         {
             var productsQuery = this._productRepository.SelectAll()
@@ -111,7 +125,7 @@ namespace ArmadaMotors.Service.Services.Products
             if(filter.From != null && filter.To != null)
             {
                 productsQuery = productsQuery
-                    .Where(p => p.Price >= filter.From && p.Price <= filter.To);
+                    .Where(p => p.Price >= filter.From && p.Price <= filter.To && p.CurrencyType == (filter.CurrencyType));
             }
 
             if(filter.CategoryId != null)

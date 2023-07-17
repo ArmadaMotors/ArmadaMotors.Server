@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArmadaMotors.Domain.Enums;
 
 namespace ArmadaMotors.Domain.Configurations
 {
@@ -12,6 +13,12 @@ namespace ArmadaMotors.Domain.Configurations
         /// Custom text
         /// </summary>
         public string Text { get; set; }
+
+        /// <summary>
+        /// Currency type
+        /// </summary>
+        /// <value></value>
+        public CurrencyType? CurrencyType { get; set; }
 
         /// <summary>
         /// Price from

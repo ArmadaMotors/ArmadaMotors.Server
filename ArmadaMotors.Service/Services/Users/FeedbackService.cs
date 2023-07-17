@@ -54,6 +54,8 @@ namespace ArmadaMotors.Service.Services.Users
         public async ValueTask<IEnumerable<Feedback>> RetrieveAllAsync(PaginationParams @params)
         {
             return await _feedbackRepository.SelectAll()
+                .Include(f => f.User)
+                .Include(f => f.Product)
                 .ToPagedList(@params)
                 .ToListAsync();
         }
@@ -61,6 +63,8 @@ namespace ArmadaMotors.Service.Services.Users
         public async ValueTask<IEnumerable<Feedback>> RetrieveAllByProductIdAsync(long? productId, PaginationParams @params)
         {
             var feedbackQuery = _feedbackRepository.SelectAll()
+                .Include(f => f.User)
+                .Include(f => f.Product)
                 .Where(f => f.IsAvailable);
 
             if(productId != null)

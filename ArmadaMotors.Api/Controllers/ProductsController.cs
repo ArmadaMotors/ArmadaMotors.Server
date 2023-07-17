@@ -1,4 +1,5 @@
 using ArmadaMotors.Domain.Configurations;
+using ArmadaMotors.Domain.Enums;
 using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Interfaces.Products;
 using Microsoft.AspNetCore.Authorization;
@@ -39,5 +40,9 @@ namespace ArmadaMotors.Api.Controllers
         [HttpPost("Search"), AllowAnonymous]
         public async ValueTask<IActionResult> SearchAsync(Filter filter)
             => Ok(await this._productService.SearchAsync(filter));
+        
+        [HttpGet("Prices"), AllowAnonymous]
+        public async ValueTask<IActionResult> GetPricesAsync(CurrencyType currencyType)
+            => Ok(await _productService.RetrievePricesAsync(currencyType));
     }
 }
