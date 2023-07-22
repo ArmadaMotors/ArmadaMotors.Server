@@ -1,9 +1,11 @@
 using ArmadaMotors.Data.IRepositories;
 using ArmadaMotors.Domain.Configurations;
 using ArmadaMotors.Domain.Entities;
+using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces.Products;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArmadaMotors.Service.Services.Products
@@ -11,27 +13,30 @@ namespace ArmadaMotors.Service.Services.Products
     public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category> categoryRepository)
+        public CategoryService(IRepository<Category> categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
-        public async ValueTask<Category> AddAsync(string name)
+        public async ValueTask<Category> AddAsync(CategoryForCreationDto dto)
         {
-            return await this._categoryRepository.InsertAsync(new Category
-            {
-                Name = name
-            });
+            var category = _mapper.Map<Category>(dto);
+
+            return await this._categoryRepository.InsertAsync(category);
         }
 
-        public async ValueTask<Category> ModifyAsync(long id, string name)
+        public async ValueTask<Category> ModifyAsync(long id, CategoryForCreationDto dto)
         {
             var category = await this._categoryRepository.SelectByIdAsync(id);
             if (category == null)
                 throw new ArmadaException(404, "Category not found");
 
-            category.Name = name;
+            category.NameUz = dto.NameUz;
+            category.NameRu = dto.NameRu;
+            category.NameEn = dto.NameEn;
 
             await this._categoryRepository.SaveChangesAsync();
 

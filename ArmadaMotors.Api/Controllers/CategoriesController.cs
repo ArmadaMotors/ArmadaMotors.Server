@@ -1,4 +1,5 @@
 using ArmadaMotors.Domain.Configurations;
+using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Interfaces.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,12 @@ namespace ArmadaMotors.Api.Controllers
             => Ok(await _categoryService.RetrieveById(id));
 
         [HttpPost]
-        public async ValueTask<IActionResult> PostAsync(string name)
-            => Ok(await _categoryService.AddAsync(name));
+        public async ValueTask<IActionResult> PostAsync(CategoryForCreationDto dto)
+            => Ok(await _categoryService.AddAsync(dto));
 
         [HttpPut("{Id}")]
-        public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, string name)
-            => Ok(await _categoryService.ModifyAsync(id, name));
+        public async ValueTask<IActionResult> PutAsync([FromRoute(Name = "Id")] long id, CategoryForCreationDto dto)
+            => Ok(await _categoryService.ModifyAsync(id, dto));
 
         [HttpDelete("{Id}")]
         public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
