@@ -5,6 +5,7 @@ using ArmadaMotors.Service.DTOs.Products;
 using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces.Products;
+using ArmadaMotors.Shared.Helpers;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,11 +15,14 @@ namespace ArmadaMotors.Service.Services.Products
     {
         private readonly IRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly string _lang;
 
         public CategoryService(IRepository<Category> categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
+
+            _lang = HttpContextHelper.Language.ToLower();
         }
 
         public async ValueTask<Category> AddAsync(CategoryForCreationDto dto)
@@ -54,11 +58,16 @@ namespace ArmadaMotors.Service.Services.Products
 
         public async ValueTask<IEnumerable<Category>> RetrieveAllAsync(PaginationParams @params)
         {
-            return await this._categoryRepository.SelectAll()
+            var categories = await this._categoryRepository.SelectAll()
                 .Include(c => c.Products)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
+
+            // init lang
+            categories.ForEach(c => c.Name = _lang == "ru" ? c.NameRu : _lang == "en" ? c.NameEn : c.NameUz);
+
+            return categories;
         }
 
         public async ValueTask<Category> RetrieveById(long id)
@@ -71,6 +80,9 @@ namespace ArmadaMotors.Service.Services.Products
                 .FirstOrDefaultAsync(c => c.Id == id);
             if (category == null)
                 throw new ArmadaException(404, "Category not found");
+
+            // init lang
+            category.Name = _lang == "ru" ? category.NameRu : _lang == "en" ? category.NameEn : category.NameUz;
 
             return category;
         }

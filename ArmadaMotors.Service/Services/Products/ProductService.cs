@@ -7,6 +7,7 @@ using ArmadaMotors.Service.Exceptions;
 using ArmadaMotors.Service.Extensions;
 using ArmadaMotors.Service.Interfaces;
 using ArmadaMotors.Service.Interfaces.Products;
+using ArmadaMotors.Shared.Helpers;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ namespace ArmadaMotors.Service.Services.Products
         private readonly IRepository<Category> _categoryRepository;
         private readonly IAssetService _assetService;
         private readonly IMapper _mapper;
+        private readonly string _lang;
 
         public ProductService(IRepository<Product> productService,
             IRepository<Category> categoryService,
@@ -28,6 +30,8 @@ namespace ArmadaMotors.Service.Services.Products
             _categoryRepository = categoryService;
             _assetService = assetService;
             _mapper = mapper;
+
+            _lang = HttpContextHelper.Language.ToLower();
         }
 
         public async ValueTask<Product> AddAsync(ProductForCreationDto dto)
@@ -82,23 +86,50 @@ namespace ArmadaMotors.Service.Services.Products
 
         public async ValueTask<IEnumerable<Product>> RetrieveAllAsync(PaginationParams @params)
         {
-            return await this._productRepository.SelectAll()
+            var products = await this._productRepository.SelectAll()
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
+
+            // init lang
+            products.ForEach(p => 
+            {
+                p.Name = _lang == "ru" ? p.NameRu : _lang == "en" ? p.NameEn : p.NameUz;
+                p.Description = _lang == "ru" ? p.DescriptionRu : _lang == "en" ? p.DescriptionEn : p.DescriptionUz;
+            }); 
+
+            return products;
         }
 
         public async ValueTask<Product> RetrieveById(long id)
         {
-            return await this._productRepository.SelectAll()
+            var product = await this._productRepository.SelectAll()
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
+
+            if(product == null)
+                throw new ArmadaException(404, "Product not found");
+
+            // init lang
+            product.Name = _lang == "ru" 
+                ? product.NameRu 
+                : _lang == "en" 
+                    ? product.NameEn 
+                    : product.NameUz;
+
+            product.Description = _lang == "ru" 
+                ? product.DescriptionRu 
+                : _lang == "en" 
+                    ? product.DescriptionEn 
+                    : product.DescriptionUz;
+
+            return product;
         }
 
         public async ValueTask<ProductPricesResultDto> RetrievePricesAsync(CurrencyType currencyType)
@@ -139,9 +170,18 @@ namespace ArmadaMotors.Service.Services.Products
                     p.Description.ToLower().Contains(filter.Text.ToLower()));
             }
 
-            return await productsQuery
+            var products = await productsQuery
                 .ToPagedList(filter)
                 .ToListAsync();
+            
+            // init lang
+            products.ForEach(p => 
+            {
+                p.Name = _lang == "ru" ? p.NameRu : _lang == "en" ? p.NameEn : p.NameUz;
+                p.Description = _lang == "ru" ? p.DescriptionRu : _lang == "en" ? p.DescriptionEn : p.DescriptionUz;
+            }); 
+
+            return products;
         }
     }
 }

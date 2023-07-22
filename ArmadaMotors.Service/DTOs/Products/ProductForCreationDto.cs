@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArmadaMotors.Service.DTOs.Products
 {
-    public class ProductForCreationDto : ILanguageEntityName, ILanguageEntityDescription
+    public class ProductForCreationDto : ILocalizationNameField, ILocalizationDescriptionField
     {
         public string NameUz { get; set; }
         public string NameRu { get; set; }

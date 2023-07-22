@@ -1,8 +1,9 @@
 using ArmadaMotors.Domain.Commons;
+using ArmadaMotors.Shared.Helpers;
 
 namespace ArmadaMotors.Domain.Entities
 {
-    public class Category : Auditable, ILanguageEntityName
+    public class Category : Auditable, ILocalizationNameField
     {
         public string Name { get; set; }
         public string NameUz { get; set; }

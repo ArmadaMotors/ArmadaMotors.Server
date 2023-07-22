@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ArmadaMotors.Service.DTOs.Products
 {
-    public class ProductForUpdateDto : ILanguageEntityName, ILanguageEntityDescription
+    public class ProductForUpdateDto : ILocalizationNameField, ILocalizationDescriptionField
     {
         public string NameUz { get; set; }
         public string NameRu { get; set; }
