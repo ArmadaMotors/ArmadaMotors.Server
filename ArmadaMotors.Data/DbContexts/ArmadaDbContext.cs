@@ -14,6 +14,7 @@ namespace ArmadaMotors.Data.DbContexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Asset> Assets { get; set; }
+        public DbSet<BannerAsset> BannerAssets { get; set; }
         public DbSet<ProductAsset> ProductAssets { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }

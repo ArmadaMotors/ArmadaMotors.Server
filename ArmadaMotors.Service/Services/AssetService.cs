@@ -14,9 +14,11 @@ namespace ArmadaMotors.Service.Services
     public class AssetService : IAssetService
     {
         private readonly IRepository<Asset> _assetRepository;
-        public AssetService(IRepository<Asset> assetRepository)
+        private readonly IRepository<BannerAsset> _bannerAssetRepository;
+        public AssetService(IRepository<Asset> assetRepository, IRepository<BannerAsset> bannerAssetRepository)
         {
             _assetRepository = assetRepository;
+            _bannerAssetRepository = bannerAssetRepository;
         }
 
         public async ValueTask<Asset> AddAsync(IFormFile file)
@@ -36,6 +38,31 @@ namespace ArmadaMotors.Service.Services
             return await this._assetRepository.InsertAsync(new Asset
             {
                 Url = Path.Combine("assets", fileName)
+            });
+        }
+
+        public async ValueTask<BannerAsset> AddBannerAsync(IFormFile file)
+        {
+            string rootPath = EnvironmentHelper.WebRootPath;
+            string fileName = Guid.NewGuid().ToString("N") + file.FileName;
+            string path = Path.Combine(rootPath, "assets", fileName);
+
+            // reduce file
+            var reducedFile = await ReduceImageSizeAsync(file.OpenReadStream());
+
+            using(var fileStream = File.OpenWrite(path))
+            {
+                await reducedFile.CopyToAsync(fileStream);
+            }
+
+            var asset = await this._assetRepository.InsertAsync(new Asset
+            {
+                Url = Path.Combine("assets", fileName)
+            });
+
+            return await this._bannerAssetRepository.InsertAsync(new BannerAsset
+            {
+                AssetId = asset.Id
             });
         }
 

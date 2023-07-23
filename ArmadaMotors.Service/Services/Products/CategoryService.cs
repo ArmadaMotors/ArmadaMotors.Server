@@ -53,6 +53,11 @@ namespace ArmadaMotors.Service.Services.Products
             if (category == null)
                 throw new ArmadaException(404, "Category not found");
 
+            var areExistChilds = this._categoryRepository.SelectAll()
+                .Any(cc => cc.ParentId == id);
+            if(areExistChilds)
+                throw new ArmadaException(400, "Please, there are related child categories, please, remove them before");
+                
             return await this._categoryRepository.DeleteAsync(id);
         }
 
@@ -60,6 +65,7 @@ namespace ArmadaMotors.Service.Services.Products
         {
             var categories = await this._categoryRepository.SelectAll()
                 .Include(c => c.Products)
+                .Include(c => c.Parent)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
@@ -73,6 +79,7 @@ namespace ArmadaMotors.Service.Services.Products
         public async ValueTask<Category> RetrieveById(long id)
         {
             var category = await this._categoryRepository.SelectAll()
+                .Include(c => c.Parent)
                 .Include(c => c.Products)
                 .ThenInclude(p => p.Assets)
                 .ThenInclude(a => a.Asset)

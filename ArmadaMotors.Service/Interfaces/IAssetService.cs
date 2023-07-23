@@ -11,5 +11,6 @@ namespace ArmadaMotors.Service.Interfaces
         ValueTask<Asset> AddAsync(IFormFile file);
         ValueTask<bool> RemoveAsync(long id);
         ValueTask<MemoryStream> ReduceImageSizeAsync(Stream file);
+        ValueTask<BannerAsset> AddBannerAsync(IFormFile file);
     }
 }
