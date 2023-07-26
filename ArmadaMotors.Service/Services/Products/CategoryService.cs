@@ -8,6 +8,7 @@ using ArmadaMotors.Service.Interfaces.Products;
 using ArmadaMotors.Shared.Helpers;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ArmadaMotors.Service.Services.Products
 {
@@ -93,5 +94,23 @@ namespace ArmadaMotors.Service.Services.Products
 
             return category;
         }
-    }
+
+		public async ValueTask<IEnumerable<Category>> RetrieveByIds(IEnumerable<long> ids)
+		{
+			// Use LINQ to filter categories based on the given IDs
+			var categories = await this._categoryRepository.SelectAll()
+		        .Include(c => c.Products)
+		        .Include(c => c.Parent)
+		        .AsNoTracking()
+		        .Where(c => ids.Contains(c.Id))
+		        .ToListAsync();
+
+            if (categories.Count==0)
+                throw new ArmadaException(404, "Categories not found");
+			// Initialize the language for each category
+			categories.ForEach(c => c.Name = _lang == "ru" ? c.NameRu : _lang == "en" ? c.NameEn : c.NameUz);
+
+			return categories;
+		}
+	}
 }
