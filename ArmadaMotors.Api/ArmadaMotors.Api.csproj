@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ArmadaMotors.Service\ArmadaMotors.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\BackgroundImages\" />
+  </ItemGroup>
+
 </Project>
