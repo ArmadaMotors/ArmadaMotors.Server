@@ -67,8 +67,21 @@ namespace ArmadaMotors.Service.Services.Products
             if (product == null)
                 throw new ArmadaException(404, "Product not found");
 
-            this._mapper.Map(product, dto);
+            this._mapper.Map(dto, product);
             product.UpdatedAt = DateTime.UtcNow;
+
+            // init lang
+            product.Name = _lang == "ru" 
+                ? product.NameRu 
+                : _lang == "en" 
+                    ? product.NameEn 
+                    : product.NameUz;
+
+            product.Description = _lang == "ru" 
+                ? product.DescriptionRu 
+                : _lang == "en" 
+                    ? product.DescriptionEn 
+                    : product.DescriptionUz;
 
             await this._productRepository.SaveChangesAsync();
 

@@ -6,25 +6,6 @@ namespace ArmadaMotors.Domain.Entities
 {
     public class Product : Auditable, ILocalizationNameField, ILocalizationDescriptionField
     {
-        public Product()
-        {
-            switch (HttpContextHelper.Language.ToLower())
-            {
-                case "en":
-                    Name = NameEn;
-                    Description = DescriptionEn;
-                    break;
-                case "ru":
-                    Name = NameRu;
-                    Description = DescriptionRu;
-                    break;
-                default:
-                    Name = NameUz;
-                    Description = DescriptionUz;
-                    break;
-            }
-        }
-
         public string Name { get; set; }
         public string NameUz { get; set; }
         public string NameRu { get; set; }
