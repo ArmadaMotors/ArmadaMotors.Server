@@ -9,13 +9,8 @@ namespace ArmadaMotors.Domain.Commons
 {
     public interface ILocalizationDescriptionField
     {
-        [JsonIgnore]
-        public string DescriptionUz { get; set; }
-        
-        [JsonIgnore]
+        public string DescriptionUz { get; set; }        
         public string DescriptionRu { get; set; }
-        
-        [JsonIgnore]
         public string DescriptionEn { get; set; }
     }
 }
