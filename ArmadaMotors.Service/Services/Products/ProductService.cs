@@ -67,7 +67,7 @@ namespace ArmadaMotors.Service.Services.Products
             if (product == null)
                 throw new ArmadaException(404, "Product not found");
 
-            this._mapper.Map(dto, product);
+            this._mapper.Map(product, dto);
             product.UpdatedAt = DateTime.UtcNow;
 
             await this._productRepository.SaveChangesAsync();
