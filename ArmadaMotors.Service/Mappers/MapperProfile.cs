@@ -18,6 +18,9 @@ namespace ArmadaMotors.Service.Mappers
             
             CreateMap<Feedback, FeedbackForCreationDto>().ReverseMap();
             CreateMap<Order, OrderForCreationDto>().ReverseMap();
+
+            CreateMap<MatorEngine, MatorEngineForCreationDto>().ReverseMap();
+            CreateMap<MatorEngine, MatorEngineForResultDto>().ReverseMap();
         }
     }
 }

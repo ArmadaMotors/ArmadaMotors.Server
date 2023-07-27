@@ -3,6 +3,7 @@ using System;
 using ArmadaMotors.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArmadaMotors.Data.Migrations
 {
     [DbContext(typeof(ArmadaDbContext))]
-    partial class ArmadaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230727171747_matorEngineMigrations")]
+    partial class matorEngineMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +45,28 @@ namespace ArmadaMotors.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Assets");
+                });
+
+            modelBuilder.Entity("ArmadaMotors.Domain.Entities.BackgroundImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BackgroundImages");
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.BannerAsset", b =>
@@ -164,36 +189,6 @@ namespace ArmadaMotors.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Inventories");
-                });
-
-            modelBuilder.Entity("ArmadaMotors.Domain.Entities.MatorEngine", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("matorEngines");
                 });
 
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Order", b =>
@@ -392,17 +387,6 @@ namespace ArmadaMotors.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ArmadaMotors.Domain.Entities.MatorEngine", b =>
-                {
-                    b.HasOne("ArmadaMotors.Domain.Entities.Product", "Product")
-                        .WithMany("Engines")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Product", b =>
                 {
                     b.HasOne("ArmadaMotors.Domain.Entities.Category", "Category")
@@ -439,8 +423,6 @@ namespace ArmadaMotors.Data.Migrations
             modelBuilder.Entity("ArmadaMotors.Domain.Entities.Product", b =>
                 {
                     b.Navigation("Assets");
-
-                    b.Navigation("Engines");
                 });
 #pragma warning restore 612, 618
         }

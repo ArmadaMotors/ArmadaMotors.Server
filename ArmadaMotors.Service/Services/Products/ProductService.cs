@@ -103,6 +103,7 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
+                .Include(p => p.Engines)
                 .AsNoTracking()
                 .ToPagedList(@params)
                 .ToListAsync();
@@ -123,6 +124,7 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
+                .Include(p => p.Engines)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -162,6 +164,7 @@ namespace ArmadaMotors.Service.Services.Products
         {
             var productsQuery = this._productRepository.SelectAll()
                 .Include(p => p.Category)
+                .Include(p => p.Engines)
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .AsQueryable();

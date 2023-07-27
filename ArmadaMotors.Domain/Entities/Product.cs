@@ -19,5 +19,6 @@ namespace ArmadaMotors.Domain.Entities
         public decimal Price { get; set; }
         public CurrencyType CurrencyType { get; set; }
         public ICollection<ProductAsset> Assets { get; set; }
+        public ICollection<MatorEngine> Engines { get; set; }
     }
 }
