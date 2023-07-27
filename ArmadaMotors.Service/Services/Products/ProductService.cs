@@ -172,8 +172,8 @@ namespace ArmadaMotors.Service.Services.Products
                     .Where(p => p.Price >= filter.From && p.Price <= filter.To && p.CurrencyType == (filter.CurrencyType));
             }
 
-            if(filter.CategoryId != null)
-                productsQuery = productsQuery.Where(p => p.CategoryId == filter.CategoryId);
+            if (filter.CategoryIds != null)
+                productsQuery = productsQuery.Where(p => filter.CategoryIds.Contains(p.CategoryId));
 
             if (!string.IsNullOrEmpty(filter.Text))
             {

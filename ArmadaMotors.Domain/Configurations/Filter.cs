@@ -33,6 +33,6 @@ namespace ArmadaMotors.Domain.Configurations
         /// <summary>
         /// Category name
         /// </summary>
-        public long? CategoryId { get; set; }
+        public long[]? CategoryIds { get; set; }
     }
 }
