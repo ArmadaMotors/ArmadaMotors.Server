@@ -180,7 +180,19 @@ namespace ArmadaMotors.Service.Services.Products
                 productsQuery = productsQuery.Where(p =>
                     p.Name.ToLower().Contains(filter.Text.ToLower()) ||
                     p.Category.Name.ToLower().Contains(filter.Text.ToLower()) ||
-                    p.Description.ToLower().Contains(filter.Text.ToLower()));
+                    p.Description.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.NameUz.ToLower().Contains(filter.Text.ToLower()) || 
+                    p.NameEn.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.NameRu.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.DescriptionUz.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.DescriptionEn.ToLower().Contains(filter.Text.ToLower()) ||
+                    p.DescriptionRu.ToLower().Contains(filter.Text.ToLower()));
+            }
+
+            if (filter.CurrencyType!= null)
+            {
+                productsQuery = productsQuery.Where(p => 
+                p.CurrencyType.Equals(filter.CurrencyType));
             }
 
             var products = await productsQuery
