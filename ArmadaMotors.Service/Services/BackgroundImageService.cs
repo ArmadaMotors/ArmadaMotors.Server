@@ -44,10 +44,6 @@ public class BackgroundImageService : IBackgroundImageService
 		return backgroundImage;
 	}
 
-	public ValueTask<IEnumerable<BackgroundImage>> RetrieveAllAsync()
-	{
-		throw new NotImplementedException();
-	}
 
 	public async ValueTask<bool> RemoveAsync(long id)
 	{

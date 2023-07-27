@@ -35,8 +35,5 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> DeleteAsync([FromRoute(Name = "Id")] long id)
             => Ok(await _categoryService.RemoveAsync(id));
 
-        [HttpGet("Ids")]
-            public async ValueTask<IActionResult> GetByIds([FromQuery] IEnumerable<long> ids)
-                => Ok(await _categoryService.RetrieveByIds(ids));
     }
 }

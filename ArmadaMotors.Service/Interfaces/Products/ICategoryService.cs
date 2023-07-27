@@ -11,6 +11,5 @@ namespace ArmadaMotors.Service.Interfaces.Products
         ValueTask<Category> ModifyAsync(long id, CategoryForCreationDto dto);
         ValueTask<Category> AddAsync(CategoryForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
-        ValueTask<IEnumerable<Category>> RetrieveByIds(IEnumerable<long> ids);
     }
 }
