@@ -62,19 +62,22 @@ namespace ArmadaMotors.Service.Services.Products
             return await this._categoryRepository.DeleteAsync(id);
         }
 
-        public async ValueTask<IEnumerable<Category>> RetrieveAllAsync(PaginationParams @params)
+        public async ValueTask<IEnumerable<Category>> RetrieveAllAsync(bool isPaginated = false, PaginationParams @params = null)
         {
-            var categories = await this._categoryRepository.SelectAll()
+            var categories = this._categoryRepository.SelectAll()
                 .Include(c => c.Products)
                 .Include(c => c.Parent)
-                .AsNoTracking()
-                .ToPagedList(@params)
-                .ToListAsync();
+                .AsNoTracking();
+            
+            if(isPaginated)
+                categories = categories.ToPagedList(@params);
+
+            var categoryList = await categories.ToListAsync();
 
             // init lang
-            categories.ForEach(c => c.Name = _lang == "ru" ? c.NameRu : _lang == "en" ? c.NameEn : c.NameUz);
+            categoryList.ForEach(c => c.Name = _lang == "ru" ? c.NameRu : _lang == "en" ? c.NameEn : c.NameUz);
 
-            return categories;
+            return categoryList;
         }
 
         public async ValueTask<Category> RetrieveById(long id)

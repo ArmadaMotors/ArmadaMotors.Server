@@ -19,9 +19,9 @@ namespace ArmadaMotors.Api.Controllers
 		public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
 		   => Ok(await matorEngineService.RetrieveAllAsync(@params));
 
-		[HttpGet("{Id}"), AllowAnonymous]
-		public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
-			=> Ok(await matorEngineService.RetrieveAsync(id));
+		[HttpGet("{ProductId}"), AllowAnonymous]
+		public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "ProductId")] long productId)
+			=> Ok(await matorEngineService.RetrieveAllByProductIdAsync(productId));
 
 		[HttpPost]
 		public async ValueTask<IActionResult> PostAsync([FromForm] MatorEngineForCreationDto dto)

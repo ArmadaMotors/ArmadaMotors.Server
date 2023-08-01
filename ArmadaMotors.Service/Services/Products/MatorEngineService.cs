@@ -57,13 +57,13 @@ public class MatorEngineService : IMatorEngineService
 		return this.mapper.Map<IEnumerable<MatorEngineForResultDto>>(engines);
 	}
 
-	public async ValueTask<MatorEngineForResultDto> RetrieveAsync(long id)
+	public async ValueTask<IEnumerable<MatorEngineForResultDto>> RetrieveAllByProductIdAsync(long productId)
 	{
-		var engine = await this.matorEngineRepository.SelectByIdAsync(id);
-		if (engine is null)
-			throw new ArmadaException(404, "Engine is not found");
+		var engines = await this.matorEngineRepository.SelectAll()
+			.Where(me => me.ProductId == productId)
+			.ToListAsync();
 
-		return this.mapper.Map<MatorEngineForResultDto>(engine);
+		return this.mapper.Map<IEnumerable<MatorEngineForResultDto>>(engines);
 	}
 
 	public async ValueTask<MatorEngineForResultDto> ModifyAsync(long id, MatorEngineForCreationDto dto)

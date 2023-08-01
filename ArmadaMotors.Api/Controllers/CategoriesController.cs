@@ -16,8 +16,8 @@ namespace ArmadaMotors.Api.Controllers
         }
 
         [HttpGet, AllowAnonymous]
-        public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
-            => Ok(await _categoryService.RetrieveAllAsync(@params));
+        public async ValueTask<IActionResult> GetAllAsync(bool isPaginated = false, [FromQuery] PaginationParams @params = null)
+            => Ok(await _categoryService.RetrieveAllAsync(isPaginated, @params));
 
         [HttpGet("{Id}"), AllowAnonymous]
         public async ValueTask<IActionResult> GetAsync([FromRoute(Name = "Id")] long id)
