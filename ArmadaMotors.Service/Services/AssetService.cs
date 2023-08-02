@@ -40,7 +40,7 @@ namespace ArmadaMotors.Service.Services
 			});
 		}
 
-		public async ValueTask<bool> IsValidAspectRatio(IFormFile file)
+		public bool IsValidAspectRatio(IFormFile file)
 		{
 			if (file == null || file.Length == 0)
 				throw new ArmadaException(400, "No file was uploaded.");
@@ -61,8 +61,7 @@ namespace ArmadaMotors.Service.Services
 		}
 		public async ValueTask<BannerAsset> AddBannerAsync(IFormFile file)
 		{
-			var isValidRatio = await IsValidAspectRatio(file);
-			if (!isValidRatio)
+			if (!IsValidAspectRatio(file))
 				throw new ArmadaException(400, "Invalid aspect ratio. Allowed ratios are 16:9 and 4:3.");
 
 			string rootPath = EnvironmentHelper.WebRootPath;
