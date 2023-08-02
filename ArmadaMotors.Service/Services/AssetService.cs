@@ -40,7 +40,7 @@ namespace ArmadaMotors.Service.Services
 			});
 		}
 
-		public async ValueTask<bool> ChekingValidAspectRatio(IFormFile file)
+		public async ValueTask<bool> IsValidAspectRatio(IFormFile file)
 		{
 			if (file == null || file.Length == 0)
 				throw new ArmadaException(400, "No file was uploaded.");
@@ -53,25 +53,15 @@ namespace ArmadaMotors.Service.Services
 			}
 
 			// Define your desired aspect ratios here (e.g., 16:9 and 4:3)
-			double[] allowedAspectRatios = { 16.0 / 9.0, 4.0 / 3.0 };
+			double allowedAspectRatio = 1920.0 / 710.0 ;
 
 			// Check if the aspect ratio is within the allowed range
-			bool isValidAspectRatio = false;
-			foreach (var ratio in allowedAspectRatios)
-			{
-				if (Math.Abs(aspectRatio - ratio) < 0.01) // You can adjust the tolerance as needed
-				{
-					isValidAspectRatio = true;
-					break;
-				}
-			}
 
-			return isValidAspectRatio;
-
+			return Math.Abs(aspectRatio - allowedAspectRatio) <= 0.3;
 		}
 		public async ValueTask<BannerAsset> AddBannerAsync(IFormFile file)
 		{
-			var isValidRatio = await ChekingValidAspectRatio(file);
+			var isValidRatio = await IsValidAspectRatio(file);
 			if (!isValidRatio)
 				throw new ArmadaException(400, "Invalid aspect ratio. Allowed ratios are 16:9 and 4:3.");
 
@@ -137,13 +127,15 @@ namespace ArmadaMotors.Service.Services
 
 		public async ValueTask<bool> RemoveBannerAsync(long id)
 		{
-			var asset = await this._bannerAssetRepository.SelectByIdAsync(id);
+			var asset = await this._bannerAssetRepository.SelectAll()
+				.Include(ba => ba.Asset)
+				.FirstOrDefaultAsync(ba => ba.Id == id);
 			if (asset == null)
 				throw new ArmadaException(404, "Background image not found");
 
 			// Delete the image file from the disk
 			string rootPath = EnvironmentHelper.WebRootPath;
-			string imagePath = Path.Combine(rootPath, asset.Asset.Url);
+			string imagePath = Path.Combine(rootPath, asset?.Asset?.Url);
 			if (File.Exists(imagePath))
 				File.Delete(imagePath);
 

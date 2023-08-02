@@ -10,5 +10,6 @@ public interface IMatorEngineService
 	ValueTask<MatorEngineForResultDto> ModifyAsync(long id, MatorEngineForCreationDto dto);
 	ValueTask<bool> RemoveAsync(long id);
 	ValueTask<MatorEngineForResultDto> RetrieveAsync(long id);
-	ValueTask<IEnumerable<MatorEngineForResultDto>> RetrieveAllAsync(PaginationParams @params);
+	ValueTask<IEnumerable<MatorEngineForResultDto
+		>> RetrieveAllAsync(PaginationParams @params);
 }

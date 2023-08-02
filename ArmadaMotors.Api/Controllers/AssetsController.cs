@@ -23,7 +23,7 @@ namespace ArmadaMotors.Api.Controllers
 				=> Ok(await this.assetService.AddBannerAsync(file));
 
 		[HttpDelete("Banners/{Id}")]
-		public async ValueTask<IActionResult> DeleteBannerAsset(long id)
+		public async ValueTask<IActionResult> DeleteBannerAsset([FromRoute(Name = "Id")] long id)
 			=> Ok(await this.assetService.RemoveBannerAsync(id));
 		[HttpGet("Banners")]
 		public async ValueTask<IActionResult> GetAllBanners()
