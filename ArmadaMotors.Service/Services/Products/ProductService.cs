@@ -155,8 +155,8 @@ namespace ArmadaMotors.Service.Services.Products
             
             return new ProductPricesResultDto
             {
-                From = (await productsQuery.FirstOrDefaultAsync()).Price,
-                To = (await productsQuery.LastOrDefaultAsync()).Price
+                From = (await productsQuery.FirstOrDefaultAsync())?.Price ?? 0,
+                To = (await productsQuery.LastOrDefaultAsync())?.Price ?? 0
             };
         }
 
