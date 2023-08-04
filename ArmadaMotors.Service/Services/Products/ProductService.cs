@@ -63,9 +63,16 @@ namespace ArmadaMotors.Service.Services.Products
                 .Include(p => p.Assets)
                 .ThenInclude(a => a.Asset)
                 .Include(p => p.Category)
+                .Include(p => p.Engines)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
                 throw new ArmadaException(404, "Product not found");
+            if (!(product.Engines.Count == 0))
+            {
+                if (product.Engines.All(ct => ct.CurrencyType != dto.CurrencyType))
+                    throw new ArmadaException(400, "Currency Type is not matched");
+
+            }
 
             this._mapper.Map(dto, product);
             product.UpdatedAt = DateTime.UtcNow;

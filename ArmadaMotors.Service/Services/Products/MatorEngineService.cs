@@ -31,6 +31,9 @@ public class MatorEngineService : IMatorEngineService
 		if (product is null)
 			throw new ArmadaException(404, "Product is not found");
 
+		if (product.CurrencyType != dto.CurrencyType)
+			throw new ArmadaException(400, "Currency Type is not matched");
+
 		var mappedEngine = this.mapper.Map<MatorEngine>(dto);
 		mappedEngine.CreatedAt = DateTime.UtcNow;
 		var result = await this.matorEngineRepository.InsertAsync(mappedEngine);
@@ -69,8 +72,11 @@ public class MatorEngineService : IMatorEngineService
 	public async ValueTask<MatorEngineForResultDto> ModifyAsync(long id, MatorEngineForCreationDto dto)
 	{
 		var engine = await this.matorEngineRepository.SelectByIdAsync(id);
+		var product = await this.productRepository.SelectByIdAsync(dto.ProductId);
 		if (engine is null)
 			throw new ArmadaException(404, "Engine is not found");
+		if (product.CurrencyType != dto.CurrencyType)
+			throw new ArmadaException(400, "Currency Type is not matched");
 
 		var mappedEngine = this.mapper.Map(dto,engine);
 		mappedEngine.UpdatedAt = DateTime.UtcNow;

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ArmadaMotors.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArmadaMotors.Service.DTOs.Products;
 
@@ -9,4 +10,6 @@ public class MatorEngineForCreationDto
 
 	[Required(ErrorMessage = "You must enter the ProductId")]
 	public long ProductId { get; set; }
+    public CurrencyType CurrencyType { get; set; }
+
 }
