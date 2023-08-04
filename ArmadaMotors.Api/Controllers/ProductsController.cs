@@ -44,5 +44,9 @@ namespace ArmadaMotors.Api.Controllers
         [HttpGet("Prices"), AllowAnonymous]
         public async ValueTask<IActionResult> GetPricesAsync(CurrencyType currencyType)
             => Ok(await _productService.RetrievePricesAsync(currencyType));
+
+        [HttpGet("Count"), AllowAnonymous]
+        public async ValueTask<IActionResult> GetProductsCountAsync()
+            => Ok(await _productService.RetrieveProductsCountAsync());
     }
 }

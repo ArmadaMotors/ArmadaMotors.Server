@@ -14,5 +14,6 @@ namespace ArmadaMotors.Service.Interfaces.Products
         ValueTask<bool> RemoveAsync(long id);
         ValueTask<IEnumerable<Product>> SearchAsync(Filter filter);
         ValueTask<ProductPricesResultDto> RetrievePricesAsync(CurrencyType currencyType);
+        ValueTask<int> RetrieveProductsCountAsync();
     }
 }

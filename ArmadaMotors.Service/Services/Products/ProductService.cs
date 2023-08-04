@@ -160,6 +160,11 @@ namespace ArmadaMotors.Service.Services.Products
             };
         }
 
+        public async ValueTask<int> RetrieveProductsCountAsync()
+        {
+            return await _productRepository.SelectAll().CountAsync();
+        }
+
         public async ValueTask<IEnumerable<Product>> SearchAsync(Filter filter)
         {
             var productsQuery = this._productRepository.SelectAll()
