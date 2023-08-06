@@ -57,7 +57,7 @@ namespace ArmadaMotors.Service.Services.Products
         public async ValueTask<bool> RemoveAsync(long id)
         {
             var order = await _orderRepository.SelectByIdAsync(id);
-            if(order == null)
+            if (order == null)
                 throw new ArmadaException(404, "Order not found");
 
             return await _orderRepository.DeleteAsync(id);
