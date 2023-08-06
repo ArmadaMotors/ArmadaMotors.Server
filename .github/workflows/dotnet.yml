@@ -30,4 +30,4 @@ jobs:
       - name: Upload project to server
         run: dotnet publish --runtime win-x64 --configuration release --self-contained false
       - name: Deploy
-        run: ./deploy.ps1
+        run: powershell -file deploy.ps1
