@@ -35,9 +35,7 @@ public class MatorEngineService : IMatorEngineService
 			throw new ArmadaException(400, "Currency Type is not matched");
 
 		var mappedEngine = this.mapper.Map<MatorEngine>(dto);
-		mappedEngine.CreatedAt = DateTime.UtcNow;
 		var result = await this.matorEngineRepository.InsertAsync(mappedEngine);
-		await this.matorEngineRepository.SaveChangesAsync();
 
 		return this.mapper.Map<MatorEngineForResultDto>(result);
 	}
