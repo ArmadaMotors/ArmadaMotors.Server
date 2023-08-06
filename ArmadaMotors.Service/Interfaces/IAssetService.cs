@@ -14,7 +14,7 @@ namespace ArmadaMotors.Service.Interfaces
         ValueTask<BannerAsset> AddBannerAsync(IFormFile file);
         ValueTask<bool> RemoveBannerAsync(long id);
         bool IsValidAspectRatio(IFormFile file);
-        ValueTask<IEnumerable<BannerAsset>> RetrieveAllBanners();
+        ValueTask<IEnumerable<BannerAsset>> RetrieveAllBannersAsync();
 
 	}
 }

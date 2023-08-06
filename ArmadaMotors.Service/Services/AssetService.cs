@@ -151,7 +151,7 @@ namespace ArmadaMotors.Service.Services
 			throw new NotImplementedException();
 		}
 
-		public async ValueTask<IEnumerable<BannerAsset>> RetrieveAllBanners()
+		public async ValueTask<IEnumerable<BannerAsset>> RetrieveAllBannersAsync()
 			=> await this._bannerAssetRepository.SelectAll()
 				.Include(a => a.Asset).ToListAsync();
 	}

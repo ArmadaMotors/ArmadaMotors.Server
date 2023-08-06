@@ -15,7 +15,7 @@ namespace ArmadaMotors.Api.Controllers
 		}
 
 		[HttpPost("Banner")]
-		public async ValueTask<IActionResult> UploadBannerAsset(
+		public async ValueTask<IActionResult> UploadBannerAssetAsync(
 			[Required(ErrorMessage = "Please, select file ...")]
 			[AllowedExtensions(new string[] { ".jpg", ".png" }, isArray: false)]
 			[MaxFileSize(5 * 1024 * 1024, isArray: false)]
@@ -23,11 +23,15 @@ namespace ArmadaMotors.Api.Controllers
 				=> Ok(await this.assetService.AddBannerAsync(file));
 
 		[HttpDelete("Banners/{Id}")]
-		public async ValueTask<IActionResult> DeleteBannerAsset([FromRoute(Name = "Id")] long id)
+		public async ValueTask<IActionResult> DeleteBannerAssetAsync([FromRoute(Name = "Id")] long id)
 			=> Ok(await this.assetService.RemoveBannerAsync(id));
-		[HttpGet("Banners")]
-		public async ValueTask<IActionResult> GetAllBanners()
-			=> Ok(await this.assetService.RetrieveAllBanners());
 
+		[HttpGet("Banners")]
+		public async ValueTask<IActionResult> GetAllBannersAsync()
+			=> Ok(await this.assetService.RetrieveAllBannersAsync());
+
+		[HttpGet("Test")]
+		public string GetTestString()
+			=> "APIs are working correctly!";
 	}
 }
