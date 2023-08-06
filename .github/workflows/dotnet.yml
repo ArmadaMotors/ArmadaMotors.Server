@@ -15,11 +15,7 @@ jobs:
     environment:
       RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-    - name: Restore dependencies
-      run: dotnet restore
+    - uses: actions/checkout@v2
     - name: Build
       run: dotnet build --no-restore
     - name: Test
