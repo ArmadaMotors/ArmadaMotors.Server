@@ -30,7 +30,7 @@ namespace ArmadaMotors.Api.Controllers
 		public async ValueTask<IActionResult> GetAllBannersAsync()
 			=> Ok(await this.assetService.RetrieveAllBannersAsync());
 
-		[HttpGet("Test")]
+		[HttpGet("Test2")]
 		public string GetTestString()
 			=> "APIs are working correctly!";
 	}
