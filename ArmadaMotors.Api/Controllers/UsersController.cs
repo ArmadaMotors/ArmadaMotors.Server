@@ -45,7 +45,7 @@ namespace ArmadaMotors.Api.Controllers
         public async ValueTask<IActionResult> UpdateRoleAsync([FromRoute(Name = "Id")] long id, UserRole role)
             => Ok(await _userService.ModifyRoleAsync(id, role));
 
-        [HttpGet("Test3"), AllowAnonymous]
+        [HttpGet("Test4"), AllowAnonymous]
         public IActionResult GetTestResult()
             => Ok("Hello World!");
     }
