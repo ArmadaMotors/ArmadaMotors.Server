@@ -11,21 +11,20 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
-    environment:
-      DOTNET_HOME_OVERRIDE: C:\Program Files (x86)\dotnet
-      RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
+
+    runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - name: Restore dependencies
+      run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
   deploy:
-    runs-on: windows-latest
-    environment:
-      DOTNET_HOME_OVERRIDE: C:\Program Files (x86)\dotnet
-      RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
+    runs-on: self-hosted
     needs: build
     steps:
       - name: Deploy
