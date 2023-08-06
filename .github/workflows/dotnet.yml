@@ -28,6 +28,6 @@ jobs:
     needs: build
     steps:
       - name: Upload project to server
-        run: dotnet publish --runtime win-x64 --configuration release --self-contained false
+        run: dotnet publish ArmadaMotors.Api --runtime win-x64 --configuration release --self-contained false
       - name: Deploy
         run: powershell -file deploy.ps1 -verb RunAs
