@@ -12,8 +12,8 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
-    working-directory: C:/Muhammadkarim/Projects/Armada Motors/CI/ArmadaMotors.Server
+    runs-on: self-hosted
+    working-directory: ./ArmadaMotors.Server
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -25,8 +25,8 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   deploy:
-    runs-on: windows-latest
-    working-directory: C:/Muhammadkarim/Projects/Armada Motors/CI/ArmadaMotors.Server
+    runs-on: self-hosted
+    working-directory: ./ArmadaMotors.Server
     needs: build
     steps:
       - name: Deploy
