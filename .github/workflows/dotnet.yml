@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: windows-latest
     environment:
       RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
     steps:
@@ -25,7 +25,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   deploy:
-    runs-on: self-hosted
+    runs-on: windows-latest
     environment:
       RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
     needs: build
