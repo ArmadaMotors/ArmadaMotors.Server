@@ -13,7 +13,7 @@ jobs:
   build:
 
     runs-on: windows-latest
-
+    working-directory: C:/Muhammadkarim/Projects/Armada Motors/CI/ArmadaMotors.Server
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -26,7 +26,8 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   deploy:
     runs-on: windows-latest
+    working-directory: C:/Muhammadkarim/Projects/Armada Motors/CI/ArmadaMotors.Server
     needs: build
     steps:
       - name: Deploy
-        run: dotnet publish -c Release
+        run: dotnet publish --runtime win-x64 --configuration release --self-contained false
