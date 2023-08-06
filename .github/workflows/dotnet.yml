@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: windows-latest
     environment:
-      DOTNET_HOME_OVERRIDE: C:\Program Files\dotnet
+      DOTNET_HOME_OVERRIDE: C:\Program Files (x86)\dotnet
       RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
     steps:
     - uses: actions/checkout@v2
@@ -24,7 +24,7 @@ jobs:
   deploy:
     runs-on: windows-latest
     environment:
-      DOTNET_HOME_OVERRIDE: C:\Program Files\dotnet
+      DOTNET_HOME_OVERRIDE: C:\Program Files (x86)\dotnet
       RUNNER_WORKSPACE: C:\Muhammadkarim\Projects\Armada Motors\CI
     needs: build
     steps:
