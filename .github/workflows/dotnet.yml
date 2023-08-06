@@ -30,4 +30,4 @@ jobs:
       - name: Upload project to server
         run: dotnet publish ArmadaMotors.Api --runtime win-x64 --configuration release --self-contained false
       - name: Deploy
-        run: powershell -file deploy.ps1 -verb RunAs
+        run: powershell -executionpolicy bypass -file deploy.ps1
