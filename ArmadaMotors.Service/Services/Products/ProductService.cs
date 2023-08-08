@@ -204,10 +204,10 @@ namespace ArmadaMotors.Service.Services.Products
                     p.DescriptionRu.ToLower().Contains(filter.Text.ToLower()));
             }
 
-            if (filter.CurrencyType!= null)
+            if (filter.CurrencyType != null)
             {
                 productsQuery = productsQuery.Where(p => 
-                p.CurrencyType.Equals(filter.CurrencyType));
+                    p.CurrencyType.Equals(filter.CurrencyType));
             }
 
             var products = await productsQuery
